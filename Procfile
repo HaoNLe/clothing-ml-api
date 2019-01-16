@@ -1,1 +1,1 @@
-web: gunicorn app:clothingapi --log-file -
+web: gunicorn app --log-file -
