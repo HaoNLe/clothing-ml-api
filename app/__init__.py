@@ -1,12 +1,15 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from models import classifier
-from io import StringIO
+from io import BytesIO
+from PIL import Image
+import torchvision.transforms as transforms
+
 
 from flask_uploads import UploadSet, IMAGES, configure_uploads, ALL
 import time
-import cv2
+#import cv2
 import numpy as np
-import config
+#import config
 
 app = Flask(__name__)
 
@@ -17,8 +20,10 @@ def index():
 @app.route('/api/classify', methods=['POST'])
 def predict():
     data = {'state': False}
-    
-    img = request.files['image'].read()
+    print(request)
+    app.logger.info('FILE RECEIVED: %s', request.files)
+
+    img = request.files['fileupload'].read()
     #try:
     #    topk = request.form['topk']
     #except:
@@ -26,7 +31,7 @@ def predict():
     #img = np.fromstring(img, np.uint8)
     #img = cv2.imdecode(img, flags=1)
     #img = cv2.resize(img, (224, 224))
-    imarr = np.uint8(np.asarray(Image.open(StringIO(img)).convert('RGB').resize((224,224))))
+    imarr = np.uint8(np.asarray(Image.open(BytesIO(img)).convert('RGB').resize((224,224))))
 
     #imarr = np.uint8(np.asarray(im.convert('RGB').resize((224,224))))
     trans = transforms.ToTensor()
@@ -34,14 +39,14 @@ def predict():
     imarr = imarr.unsqueeze(0)
     
     data = predict_img(imarr)#, is_numpy=True, topk=topk)
-    return flask.jsonify(data)
+    return jsonify(data)
 
 def predict_img(img): #, is_numpy=False, topk=1):
     data = dict()
     start = time.time()
     result = classifier(img) #model.predict(img, is_numpy=is_numpy, topk=int(topk))
     result = result.clone().detach()[0]
-    nparr = result.numpy()
+    nparr = np.float64(result.numpy())
 
     cost_time = time.time() - start
     data['predictions'] = list()
