@@ -1,15 +1,22 @@
 from flask import Flask, request, jsonify
-from models import classifier
+#from models import classifier
 from io import BytesIO
 from PIL import Image
 import torchvision.transforms as transforms
-
 
 from flask_uploads import UploadSet, IMAGES, configure_uploads, ALL
 import time
 #import cv2
 import numpy as np
 #import config
+
+import torch
+from torchvision import models
+
+device = torch.device("cpu")
+classifier = models.resnet18(num_classes=6).to(device)
+classifier.load_state_dict(torch.load('resnet18_1st', map_location='cpu'))
+classifier.eval()
 
 app = Flask(__name__)
 
