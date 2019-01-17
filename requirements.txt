@@ -3,5 +3,4 @@ Flask-Cors==2.1.2
 Flask-Uploads==0.2.1
 gunicorn==19.9.0
 Pillow==5.2.0
-torch-cpu==1.0.0
-torchvision-cpu==0.2.1
+Pytorch
