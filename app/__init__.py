@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 #from models import classifier
 from io import BytesIO
-from Pillow import Image
+from PIL import Image
 import torchvision.transforms as transforms
 
 from flask_uploads import UploadSet, IMAGES, configure_uploads, ALL
