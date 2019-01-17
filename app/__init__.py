@@ -10,15 +10,15 @@ import time
 import numpy as np
 #import config
 
-import torch-cpu
-from torchvision-cpu import models
+import torch
+from torchvision import models
+
+app = Flask(__name__)
 
 device = torch.device("cpu")
 classifier = models.resnet18(num_classes=6).to(device)
 classifier.load_state_dict(torch.load('resnet18_1st', map_location='cpu'))
 classifier.eval()
-
-app = Flask(__name__)
 
 @app.route('/')
 def index():
