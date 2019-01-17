@@ -3,5 +3,5 @@ Flask-Cors==2.1.2
 Flask-Uploads==0.2.1
 gunicorn==19.9.0
 Pillow==5.2.0
-https://download.pytorch.org/whl/cpu/torch-0.4.1-cp35-cp35m-linux_x86_64.whl
+https://download.pytorch.org/whl/cpu/torch-0.4.1-cp36-cp36m-linux_x86_64.whl
 torchvision
