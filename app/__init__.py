@@ -10,8 +10,8 @@ import time
 import numpy as np
 #import config
 
-import torch
-from torchvision import models
+import torch-cpu
+from torchvision-cpu import models
 
 device = torch.device("cpu")
 classifier = models.resnet18(num_classes=6).to(device)
